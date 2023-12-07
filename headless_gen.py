@@ -1,16 +1,11 @@
 import os
 import sys
 
-
-# print('[System ARGV] ' + str(sys.argv))
-
+# need to modify sys path for module imports to work since various modules use
+# relative imports that aren't specced correctly
 root = os.path.dirname(os.path.abspath(__file__))
 backend_path = os.path.join(root, 'backend', 'headless')
 sys.path += [root, backend_path]
-
-# os.chdir(root)
-# os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
-# os.environ["GRADIO_SERVER_PORT"] = "7865"
 
 import random
 import time
@@ -21,7 +16,6 @@ import modules.constants as constants
 import modules.flags as flags
 import modules.gradio_hijack as grh
 import modules.advanced_parameters as advanced_parameters
-import argparse
 import backend.headless.fcbh.model_management as model_management
 
 def generate_image(args):
