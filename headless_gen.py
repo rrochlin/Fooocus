@@ -32,7 +32,7 @@ def generate_image(args):
     task = worker.AsyncTask(args=args)
     worker.async_tasks.append(task)
     while True:
-        time.sleep(0.1)
+        time.sleep(0.01)
         if len(task.yields) > 0:
             flag, product = task.yields.pop(0)
             if flag == 'preview':
@@ -149,16 +149,12 @@ def adps():
 def main():
     advanced_parameters.set_all_advanced_parameters(*adps())
     filePath = r"C:\SoftwareDev\misc_scripts\OpenAIPlayGround\project\tmp\FullResponse1.txt"
-    prompts = [i.strip() for i in open(filePath,'r') if i.strip()][:3]
+    prompts = [i.strip() for i in open(filePath,'r') if i.strip()]
     prompt=""
     image_seed=""
     seed_random = "" is image_seed
     negative_prompt: str=modules.config.default_prompt_negative
     controls=ctrls(prompt,negative_prompt,image_seed, seed_random)
-    # import multiprocessing as mp
-    # from itertools import repeat
-    # with mp.Pool(3) as pool:
-    #     pool.starmap(generate_image,prompts,repeat(controls[1:]))
     for p in prompts:
         controls[0] = p
         generate_image(controls.copy())
